@@ -22,10 +22,10 @@ if uploaded_file is not None:
     test = []
     i= 0
     choice_variable = st.sidebar.multiselect("Variables",df.select_dtypes(["float","int"]).columns)
+    st.header("Équipes")
     edited_df = st.experimental_data_editor(new_df)
     if "Unknow" not in edited_df["Posession"].values and len(choice_variable)>0:
         df = df.merge(edited_df, on='Équipe dans la période sélectionnée', how = "left")
-        st.header("Équipes")
         df["Posession"]= df["Posession"].astype(float)
         for variable in choice_variable:
             var = st.sidebar.slider(variable, 0, 100, 100)
