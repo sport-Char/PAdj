@@ -5,7 +5,7 @@ import scipy.stats as stats
 
 
 
-st.title('Visualisation pour le recrutement')
+st.title('Joueurs avec ajustement selon la possession')
 
 uploaded_file = st.sidebar.file_uploader("Choose a file")
 pdi = []
@@ -27,6 +27,7 @@ if uploaded_file is not None:
     if "Unknow" not in edited_df["Posession"].values and len(choice_variable)>0:
         df = df.merge(edited_df, on='Équipe dans la période sélectionnée', how = "left")
         df["Posession"]= df["Posession"].astype(float)
+        st.sidebar.title("Influence de chaque parametre")
         for variable in choice_variable:
             var = st.sidebar.slider(variable, 0, 100, 100)
             df[variable] = (df[variable] * 2 /(1 + np.exp(-0.1*(50-df["Posession"]))))
