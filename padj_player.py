@@ -21,14 +21,14 @@ if uploaded_file is not None:
     st.sidebar.title("Variable de sélection")
     test = []
     i= 0
-    choice_variable = st.sidebar.multiselect("Variables",df.select_dtypes(["float","int"]).columns)
+    choice_variable_off = st.sidebar.multiselect("Variables",df.select_dtypes(["float","int"]).columns)
     st.header("Équipes")
     edited_df = st.experimental_data_editor(new_df)
-    if "Unknow" not in edited_df["Posession"].values and len(choice_variable)>0:
+    if "Unknow" not in edited_df["Posession"].values and len(choice_variable_off)>0:
         df = df.merge(edited_df, on='Équipe dans la période sélectionnée', how = "left")
         df["Posession"]= df["Posession"].astype(float)
         st.sidebar.title("Influence de chaque parametre")
-        for variable in choice_variable:
+        for variable in choice_variable_off:
             var = st.sidebar.slider(variable, 0, 100, 100)
             df[variable] = (df[variable] * 2 /(1 + np.exp(-0.1*(50-df["Posession"]))))
             df[variable] = stats.zscore(df[variable])
