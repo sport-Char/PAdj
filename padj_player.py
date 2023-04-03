@@ -21,7 +21,9 @@ if uploaded_file is not None:
     st.sidebar.title("Variable de sélection Offensive")
     test = []
     i= 0
-    choice_variable_off = st.sidebar.multiselect("Variables",df.select_dtypes(["float","int"]).columns)
+    choice_variable_off = st.sidebar.multiselect("Variables_Off",df.select_dtypes(["float","int"]).columns)
+    st.sidebar.title("Variable de sélection Défensive")
+    choice_variable_def = st.sidebar.multiselect("Variables_Def",df.select_dtypes(["float","int"]).columns)
     st.header("Équipes")
     edited_df = st.experimental_data_editor(new_df)
     if "Unknow" not in edited_df["Posession"].values and len(choice_variable_off)>0:
