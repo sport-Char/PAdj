@@ -16,8 +16,15 @@ if uploaded_file is not None:
     new_df = pd.DataFrame(name,  columns =['Équipe dans la période sélectionnée'])
     new_df = new_df.sort_values(by="Équipe dans la période sélectionnée")
     new_df.reset_index(drop=True,inplace=True)
-    new_df["Posession"]= "Unknow"
+    new_df["Posession"]= 50.00
     df["PDI"]=0
+    age_max = st.sidebar.slider("Âge Max", 16, 40, 24)
+    pos = []
+    pos = df["Place"].tolist()
+    pos = [p.split(", ") for p in pos]
+    flat_list = [item for sublist in pos for item in sublist]
+    unique_list_pos = list(set(flat_list))
+    positions = st.sidebar.multiselect("Position voulue",unique_list_pos)
     st.sidebar.title("Variable de sélection Offensive")
     test = []
     i= 0
@@ -27,6 +34,10 @@ if uploaded_file is not None:
     st.header("Équipes")
     edited_df = st.experimental_data_editor(new_df)
     if "Unknow" not in edited_df["Posession"].values and len(choice_variable_off)>0:
+        age_mask = df["Âge"] <= age_max
+        pos_mask = df["Place"].apply(lambda x: any(pos in x for pos in positions))
+        final_mask = age_mask & pos_mask
+        df = df[final_mask]
         df = df.merge(edited_df, on='Équipe dans la période sélectionnée', how = "left")
         df["Posession"]= df["Posession"].astype(float)
         st.sidebar.title("Influence de chaque parametre offensif")
@@ -36,7 +47,7 @@ if uploaded_file is not None:
             df[variable] = stats.zscore(df[variable])
             #st.write(df[[variable,'Joueur']])
             df["PDI"] += df[variable]*(var/100)
-            
+
         if len(choice_variable_def)>0:
             st.sidebar.title("Influence de chaque parametre défensif")
             for variable_def in choice_variable_def:
