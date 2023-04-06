@@ -21,7 +21,7 @@ if uploaded_file is not None:
     df["Jeu_long"] = df["Average pass length, m"]*df["Accurate passes, %"]
     age_max = st.sidebar.slider("Âge Max", 16, 40, 24)
     pos = []
-    pos = df["Place"].tolist()
+    pos = df["Position"].tolist()
     pos = [p.split(", ") for p in pos]
     flat_list = [item for sublist in pos for item in sublist]
     unique_list_pos = list(set(flat_list))
