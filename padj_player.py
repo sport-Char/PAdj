@@ -61,4 +61,4 @@ if uploaded_file is not None:
         df = df.sort_values(by='PDI', ascending=False)
         df.reset_index(drop=True, inplace=True)
         st.header("Liste des joueurs")
-        st.write(df[['Joueur', 'Équipe dans la période sélectionnée',"Place", "Âge","Valeur marchande","Contrat expiration","Tirs contre par 90","Buts concédés par 90","Buts concédés","xG contre par 90","xG contre","PDI"]].head(50))
+        st.write(df[['Joueur', 'Équipe dans la période sélectionnée',"Place", "Âge","Valeur marchande","Contrat expiration","Passes longues par 90","Tirs contre par 90","Buts concédés par 90","Buts concédés","xG contre par 90","xG contre","PDI"]].head(50))
