@@ -30,6 +30,7 @@ if uploaded_file is not None:
     test = []
     i= 0
     choice_variable_off = st.sidebar.multiselect("Variables_Off",df.select_dtypes(["float","int"]).columns)
+    choice_variable_off = ["Prevented goals per 90","Save rate, %","Exits per 90","Accurate long passes, %"]
     st.sidebar.title("Variable de sélection Défensive")
     choice_variable_def = st.sidebar.multiselect("Variables_Def",df.select_dtypes(["float","int"]).columns)
     st.header("Équipes")
