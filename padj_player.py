@@ -12,13 +12,13 @@ pdi = []
 if uploaded_file is not None:
     df = pd.read_excel(io=uploaded_file)
     df = df.fillna(0)
-    name  = df["Équipe dans la période sélectionnée"].unique()
-    new_df = pd.DataFrame(name,  columns =['Équipe dans la période sélectionnée'])
-    new_df = new_df.sort_values(by="Équipe dans la période sélectionnée")
+    name  = df["Team within selected timeframe"].unique()
+    new_df = pd.DataFrame(name,  columns =['Team within selected timeframe'])
+    new_df = new_df.sort_values(by="Team within selected timeframe")
     new_df.reset_index(drop=True,inplace=True)
     new_df["Posession"]= 50.00
     df["PDI"]=0
-    df["Jeu_long"] = df["Longueur moyenne des passes, m"]*df["Passes précises, %"]
+    df["Jeu_long"] = df["Average pass length, m"]*df["Accurate passes, %"]
     age_max = st.sidebar.slider("Âge Max", 16, 40, 24)
     pos = []
     pos = df["Place"].tolist()
@@ -35,11 +35,11 @@ if uploaded_file is not None:
     st.header("Équipes")
     edited_df = st.experimental_data_editor(new_df)
     if "Unknow" not in edited_df["Posession"].values and len(choice_variable_off)>0:
-        age_mask = df["Âge"] <= age_max
-        pos_mask = df["Place"].apply(lambda x: any(pos in x for pos in positions))
+        age_mask = df["Age"] <= age_max
+        pos_mask = df["Position"].apply(lambda x: any(pos in x for pos in positions))
         final_mask = age_mask & pos_mask
         df = df[final_mask]
-        df = df.merge(edited_df, on='Équipe dans la période sélectionnée', how = "left")
+        df = df.merge(edited_df, on='Team within selected timeframe', how = "left")
         df["Posession"]= df["Posession"].astype(float)
         st.sidebar.title("Influence de chaque parametre offensif")
         for variable in choice_variable_off:
@@ -61,4 +61,4 @@ if uploaded_file is not None:
         df = df.sort_values(by='PDI', ascending=False)
         df.reset_index(drop=True, inplace=True)
         st.header("Liste des joueurs")
-        st.write(df[['Joueur', 'Équipe dans la période sélectionnée',"Place", "Âge","Valeur marchande","Contrat expiration","Passes longues par 90","Tirs contre par 90","Buts concédés par 90","Buts concédés","xG contre par 90","xG contre","PDI"]].head(50))
+        st.write(df[['Player', 'Team within selected timeframe',"Position", "Age","Market value","Contract expires","Long passes per 90","Shots against per 90","Conceded goals per 90","Conceded goals","xG against per 90","xG against","PDI"]].head(50))
