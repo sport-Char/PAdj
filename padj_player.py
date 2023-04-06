@@ -18,6 +18,7 @@ if uploaded_file is not None:
     new_df.reset_index(drop=True,inplace=True)
     new_df["Posession"]= 50.00
     df["PDI"]=0
+    df["Jeu_long"] = df["Longueur moyenne des passes, m"]*df["Passes précises, %"]
     age_max = st.sidebar.slider("Âge Max", 16, 40, 24)
     pos = []
     pos = df["Place"].tolist()
