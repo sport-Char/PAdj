@@ -64,15 +64,6 @@ if uploaded_file is not None:
             #st.write(df[[variable,'Joueur']])
             df["KPI"] += df[variable]*(var/100)
 
-        """if len(choice_variable_def)>0:
-            st.sidebar.title("Influence de chaque parametre défensif")
-            for variable_def in choice_variable_def:
-                var = st.sidebar.slider(variable_def, 0, 100, 100)
-                df[variable_def] = (df[variable_def] * 2 /(1 + np.exp(-0.1*(df["Posession"]-50))))
-                df[variable_def] = stats.zscore(df[variable_def])
-            #st.write(df[[variable,'Joueur']])
-                df["KPI"] += df[variable_def]*(var/100)"""
-
         df = df.sort_values(by='KPI', ascending=False)
         df.reset_index(drop=True, inplace=True)
         st.header("Liste des joueurs")
